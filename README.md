@@ -1,7 +1,7 @@
 # Chat App
 
 Small Chat app focuses on horizontal scaling. Uses docker, traefik, node and redis.
-This repo has built in front-end interface for chat `chat-fe/`
+This repo has own front-end interface for chat `chat-fe/`
 
 ## Initial installation
 

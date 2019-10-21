@@ -1,0 +1,14 @@
+config:
+  target: "http://ves.chat.test"
+  socketio:
+    transports: ["websocket"]
+
+scenarios:
+  - name: "Connect and send a bunch of messages"
+    flow:
+      - loop:
+          - emit:
+              channel: "online"
+              data: {'user': 'raymund'}
+          - think: 1
+        count: 50

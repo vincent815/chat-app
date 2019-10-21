@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  traefik:
+    # The official v2.0 Traefik docker image
+    image: traefik:v2.0
+    networks:
+      - redis-network
+    # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+
+      - "3000:3000"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/etc/traefik/traefik.yml
+
+  redis-instance:
+    image: redis:latest
+    command: ["redis-server"]
+    networks:
+      - redis-network
+    depends_on:
+      - traefik
+    ports:
+      - '6379:6379'
+    expose:
+      - "6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    restart: always
+
+  service:
+    # build node server
+    build:
+      context: ./chat-node-server
+      # jump 1 level in dockerfile since Dockerfile is outside of `chat-node-server`
+      dockerfile: ../Dockerfile
+    networks:
+      - redis-network
+    ports:
+      - "3000"
+    depends_on:
+      - traefik
+      - redis-instance
+    deploy:
+      replicas: 2
+    environment:
+      REDIS: 'redis-instance'
+    labels:
+      - traefik.http.routers.service.rule=Host(`localhost`)
+    volumes:
+      - ./chat-node-server/package.json:/package.json
+      - ./chat-node-server/app.js:/app.js
+      - ./chat-node-server/node_modules:/node_modules
+
+networks:
+  redis-network:

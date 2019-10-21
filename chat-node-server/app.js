@@ -30,7 +30,7 @@ io.on('connection', function(socket){
         io.emit('message-receive', parseData);
       } else if (channel === 'redis-typing') {
         // emit to others that user is typing
-        io.emit('typing', parseData);
+        io.emit('typing-' + parseData.user, parseData);
       } else if (channel === 'redis-online') {
         // tell everyone that user is online
         io.emit('is-online', parseData);

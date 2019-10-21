@@ -16,8 +16,9 @@ After the project setup, `cd` to project folder `chat-app/`
 
 ## Running Chat FE
 - `cd chat-fe`
-- `npm run serve` (which will hosted in localhost:8081)
+- `npm run serve` (which will be hosted in localhost:8081)
  
 ## Notes
+- available usernames `raymund`, `rj`, `noe`, `charm`.
 - make sure to run the `docker` first before the `chat-fe`
 - You can check traefik dashboard in `localhost:8080`

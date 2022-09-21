@@ -14,7 +14,7 @@
     "uws": "^100.0.1",
     "vue": "^2.6.10",
     "vue-socket.io": "^3.0.7",
-    "vuetify": "^2.1.0"
+    "vuetify": "^2.6.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.0",
